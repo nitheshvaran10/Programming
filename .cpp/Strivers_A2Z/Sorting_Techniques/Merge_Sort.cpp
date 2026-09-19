@@ -3,7 +3,7 @@
 #include <vector>
 
 void DivideAndConquer(std::vector<int> &nums, int low, int high){
-    if (low==high) return;
+    if (low>=high) return;
 
     int mid = low + (high-low)/2;
     DivideAndConquer(nums, low, mid);
@@ -11,25 +11,12 @@ void DivideAndConquer(std::vector<int> &nums, int low, int high){
     std::vector<int> temp;
     int l = low, r = mid+1;
     while (l<=mid && r<=high){
-        if (nums[l]<nums[r]){
-            temp.emplace_back(nums[l]);
-            ++l;
-        }
-        else{
-            temp.emplace_back(nums[r]);
-            ++r;
-        }
+        if (nums[l]<nums[r]) temp.emplace_back(nums[l++]);
+        else temp.emplace_back(nums[r++]);
     }
 
-    while (l<=mid){
-        temp.emplace_back(nums[l]);
-        ++l;
-    }
-    while (r<=high){
-        temp.emplace_back(nums[r]);
-        ++r;
-    }
-
+    while (l<=mid) temp.emplace_back(nums[l++]);
+    while (r<=high) temp.emplace_back(nums[r++]);
     for (int i=low; i<=high; ++i) nums[i] = temp[i-low];
 }
 
